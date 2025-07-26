@@ -1,15 +1,19 @@
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import kafrikaLogo from '../../assets/kafrika_logo.png';
 
 const LoginForm: React.FC = () => {
   const [id, setId] = useState("");
   const [password, setPassword] = useState("");
   const [autoLogin, setAutoLogin] = useState(true);
+  const navigate = useNavigate();
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     // TODO: 로그인 처리
     alert(`아이디: ${id}\n비밀번호: ${password}\n자동 로그인: ${autoLogin}`);
+    // 로그인 성공 시 채팅 페이지로 이동
+    navigate("/chat");
   };
 
   return (
@@ -55,7 +59,7 @@ const LoginForm: React.FC = () => {
         style={{
           background: "#fff",
           borderRadius: 18,
-          padding: "40px 48px 48px 48px",
+          padding: "56px 48px 36px 48px",
           minWidth: 420,
           maxWidth: 520,
           width: "95vw",
