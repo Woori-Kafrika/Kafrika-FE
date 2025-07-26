@@ -3,8 +3,15 @@ import ChatHeader from "./ChatHeader";
 import ChatMessageList from "./ChatMessageList";
 import ChatInput from "./ChatInput";
 
+interface Message {
+  id: number;
+  text: string;
+  sender: "user" | "system";
+  timestamp: string;
+}
+
 const ChatRoom: React.FC = () => {
-  const [messages, setMessages] = useState([
+  const [messages, setMessages] = useState<Message[]>([
     {
       id: 1,
       text: "안녕하세요! KAFRIKA TALK에 오신 것을 환영합니다! 🎉",
@@ -21,7 +28,7 @@ const ChatRoom: React.FC = () => {
 
   const handleSendMessage = (text: string) => {
     if (text.trim()) {
-      const newMessage = {
+      const newMessage: Message = {
         id: messages.length + 1,
         text: text,
         sender: "user",

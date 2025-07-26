@@ -1,19 +1,44 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { api } from "../../services/api";
+import { useAuthStore } from "../../stores/authStore";
 import kafrikaLogo from '../../assets/kafrika_logo.png';
 
 const LoginForm: React.FC = () => {
   const [id, setId] = useState("");
   const [password, setPassword] = useState("");
   const [autoLogin, setAutoLogin] = useState(true);
+  const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState("");
+  
   const navigate = useNavigate();
+  const { login, setError: setAuthError } = useAuthStore();
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    // TODO: 로그인 처리
-    alert(`아이디: ${id}\n비밀번호: ${password}\n자동 로그인: ${autoLogin}`);
-    // 로그인 성공 시 채팅 페이지로 이동
-    navigate("/chat");
+    setError("");
+    setIsLoading(true);
+
+    try {
+      const response = await api.login({
+        email: id,
+        password: password
+      });
+
+      if (response.success && response.data) {
+        // 로그인 성공
+        login(response.data.user, response.data.token);
+        localStorage.setItem('token', response.data.token);
+        navigate("/chat");
+      } else {
+        // 로그인 실패
+        setError(response.error || "로그인에 실패했습니다.");
+      }
+    } catch (err) {
+      setError("로그인 중 오류가 발생했습니다.");
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   return (
@@ -74,6 +99,20 @@ const LoginForm: React.FC = () => {
         <h2 style={{ fontSize: 30, fontWeight: 700, marginBottom: 50, lineHeight: 1.3, color: "#222" }}>
           아이디와 비밀번호를<br />입력해주세요.
         </h2>
+        
+        {error && (
+          <div style={{ 
+            color: "#d32f2f", 
+            background: "#ffebee", 
+            padding: "12px", 
+            borderRadius: 8, 
+            marginBottom: 20,
+            fontSize: 14
+          }}>
+            {error}
+          </div>
+        )}
+        
         <div style={{ marginBottom: 22 }}>
           <label style={{ display: "block", color: "#1976d2", marginBottom: 7, fontWeight: 600, fontSize: 16 }}>아이디</label>
           <input
@@ -81,6 +120,7 @@ const LoginForm: React.FC = () => {
             value={id}
             onChange={e => setId(e.target.value)}
             placeholder="아이디를 입력하세요"
+            disabled={isLoading}
             style={{
               width: "100%",
               padding: "16px 14px",
@@ -88,7 +128,7 @@ const LoginForm: React.FC = () => {
               border: "1.5px solid #e0e0e0",
               fontSize: 18,
               outline: "none",
-              background: "#f6faff",
+              background: isLoading ? "#f5f5f5" : "#f6faff",
               transition: "border 0.2s, box-shadow 0.2s",
               fontWeight: 500,
               boxSizing: "border-box",
@@ -96,8 +136,10 @@ const LoginForm: React.FC = () => {
             }}
             required
             onFocus={e => {
-              e.currentTarget.style.border = '#1976d2';
-              e.currentTarget.style.boxShadow = '0 0 0 2px #b2e0ff';
+              if (!isLoading) {
+                e.currentTarget.style.border = '#1976d2';
+                e.currentTarget.style.boxShadow = '0 0 0 2px #b2e0ff';
+              }
             }}
             onBlur={e => {
               e.currentTarget.style.border = '#e0e0e0';
@@ -112,6 +154,7 @@ const LoginForm: React.FC = () => {
             value={password}
             onChange={e => setPassword(e.target.value)}
             placeholder="비밀번호를 입력하세요"
+            disabled={isLoading}
             style={{
               width: "100%",
               padding: "16px 14px",
@@ -119,7 +162,7 @@ const LoginForm: React.FC = () => {
               border: "1.5px solid #e0e0e0",
               fontSize: 18,
               outline: "none",
-              background: "#f6faff",
+              background: isLoading ? "#f5f5f5" : "#f6faff",
               transition: "border 0.2s, box-shadow 0.2s",
               fontWeight: 500,
               boxSizing: "border-box",
@@ -127,8 +170,10 @@ const LoginForm: React.FC = () => {
             }}
             required
             onFocus={e => {
-              e.currentTarget.style.border = '#1976d2';
-              e.currentTarget.style.boxShadow = '0 0 0 2px #b2e0ff';
+              if (!isLoading) {
+                e.currentTarget.style.border = '#1976d2';
+                e.currentTarget.style.boxShadow = '0 0 0 2px #b2e0ff';
+              }
             }}
             onBlur={e => {
               e.currentTarget.style.border = '#e0e0e0';
@@ -136,25 +181,36 @@ const LoginForm: React.FC = () => {
             }}
           />
         </div>
-        <button type="submit" style={{
-          width: "100%",
-          padding: 18,
-          background: "#1976d2",
-          color: "#fff",
-          border: "none",
-          borderRadius: 9,
-          fontWeight: 700,
-          fontSize: 20,
-          marginTop: 20,
-          marginBottom: 40,
-          cursor: "pointer",
-          boxShadow: "0 2px 8px rgba(25, 118, 210, 0.08)",
-          transition: "background 0.2s, box-shadow 0.2s"
-        }}
-        onMouseOver={e => (e.currentTarget.style.background = "#1251a3")}
-        onMouseOut={e => (e.currentTarget.style.background = "#1976d2")}
+        <button 
+          type="submit" 
+          disabled={isLoading}
+          style={{
+            width: "100%",
+            padding: 18,
+            background: isLoading ? "#ccc" : "#1976d2",
+            color: "#fff",
+            border: "none",
+            borderRadius: 9,
+            fontWeight: 700,
+            fontSize: 20,
+            marginTop: 20,
+            marginBottom: 40,
+            cursor: isLoading ? "not-allowed" : "pointer",
+            boxShadow: "0 2px 8px rgba(25, 118, 210, 0.08)",
+            transition: "background 0.2s, box-shadow 0.2s"
+          }}
+          onMouseOver={e => {
+            if (!isLoading) {
+              e.currentTarget.style.background = "#1251a3";
+            }
+          }}
+          onMouseOut={e => {
+            if (!isLoading) {
+              e.currentTarget.style.background = "#1976d2";
+            }
+          }}
         >
-          로그인 하기
+          {isLoading ? "로그인 중..." : "로그인 하기"}
         </button>
         <div style={{ display: "flex", alignItems: "center", marginBottom: 0, justifyContent: "space-between" }}>
           <div style={{ display: "flex", alignItems: "center" }}>
@@ -163,6 +219,7 @@ const LoginForm: React.FC = () => {
               type="checkbox"
               checked={autoLogin}
               onChange={e => setAutoLogin(e.target.checked)}
+              disabled={isLoading}
               style={{ marginRight: 8, accentColor: "#1976d2", width: 16, height: 16 }}
             />
             <label htmlFor="auto-login" style={{ color: "#1976d2", fontWeight: 500, fontSize: 15, cursor: "pointer" }}>
