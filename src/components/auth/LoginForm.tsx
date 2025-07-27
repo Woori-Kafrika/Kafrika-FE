@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { Link } from 'react-router-dom';
 import '../../styles/LoginForm.css';
 
 interface LoginFormProps {
@@ -80,7 +81,7 @@ const LoginForm: React.FC<LoginFormProps> = ({ onSubmit, isLoading = false }) =>
 
       <div className="form-actions">
         <div className="links">
-          <a href="/signup" className="link">회원가입</a>
+          <Link to="/signup" className="link">회원가입</Link>
           <span className="separator">|</span>
           <a href="/find-password" className="link">비밀번호 찾기</a>
         </div>
