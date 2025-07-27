@@ -37,9 +37,9 @@ const Footer: React.FC = () => {
       </div>
       
       <div className="footer-bottom">
-        <p>Copyright © Won Payments. All Rights Reserved</p>
-        <p>사업자등록번호: 123-45-67890 | 대표: 정서현,신기범,최홍석,최소영 | 호스팅서비스: AWS</p>
-        <p>통신판매업신고: 2025-서울상암-1234 | 주소: 서울특별시 월드컵북로 434 상암 IT Tower</p>
+        <p>Copyright © Woori Payments. All Rights Reserved</p>
+        <p>사업자등록번호: 123-45-67890 | 대표: KAFRIKA | 호스팅서비스: JCLOUD</p>
+        <p>통신판매업신고: 2025-KAFRIKA-1234 | 주소: 서울특별시 월드컵북로 434 상암 IT Tower</p>
       </div>
     </footer>
   );
