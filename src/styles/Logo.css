@@ -1,0 +1,39 @@
+/* 로고 스타일 */
+.logo {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+}
+
+.logo-line {
+  width: 24px;
+  height: 2px;
+  background-color: #000000;
+}
+
+.logo-text {
+  font-size: 20px;
+  font-weight: 500;
+  color: #000000;
+  letter-spacing: 0.5px;
+}
+
+/* 로고 크기 변형 */
+.logo.small .logo-line {
+  width: 16px;
+  height: 1px;
+}
+
+.logo.small .logo-text {
+  font-size: 14px;
+}
+
+.logo.large .logo-line {
+  width: 32px;
+  height: 3px;
+}
+
+.logo.large .logo-text {
+  font-size: 28px;
+}
