@@ -20,6 +20,27 @@ const LoginForm: React.FC = () => {
     setIsLoading(true);
 
     try {
+      // 백엔드 서버가 없을 때를 위한 임시 로그인 처리
+      if (!id || !password) {
+        setError("아이디와 비밀번호를 입력해주세요.");
+        setIsLoading(false);
+        return;
+      }
+
+      // 임시 로그인 성공 처리 (백엔드 없이)
+      const tempUser = {
+        id: "1",
+        email: id,
+        name: id
+      };
+      const tempToken = "temp_token_" + Date.now();
+      
+      login(tempUser, tempToken);
+      localStorage.setItem('token', tempToken);
+      navigate("/chat");
+      
+      // 실제 API 호출은 주석 처리
+      /*
       const response = await api.login({
         email: id,
         password: password
@@ -34,6 +55,7 @@ const LoginForm: React.FC = () => {
         // 로그인 실패
         setError(response.error || "로그인에 실패했습니다.");
       }
+      */
     } catch (err) {
       setError("로그인 중 오류가 발생했습니다.");
     } finally {

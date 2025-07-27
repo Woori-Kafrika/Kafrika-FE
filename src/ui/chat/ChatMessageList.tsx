@@ -1,10 +1,11 @@
 import React from "react";
 
 interface Message {
-  id: number;
+  id: string;
   text: string;
   sender: "user" | "system";
-  timestamp: string;
+  timestamp: Date;
+  senderName?: string; // 발신자 이름 추가
 }
 
 interface ChatMessageListProps {
@@ -12,12 +13,20 @@ interface ChatMessageListProps {
 }
 
 const ChatMessageList: React.FC<ChatMessageListProps> = ({ messages }) => {
+  const formatTime = (date: Date) => {
+    return date.toLocaleTimeString('ko-KR', { 
+      hour: '2-digit', 
+      minute: '2-digit',
+      hour12: false 
+    });
+  };
+
   return (
     <div style={{
       flex: 1,
       padding: "20px",
       overflowY: "auto",
-      background: "#f8f9fa"
+      background: "#87CEEB"
     }}>
       {messages.map((message) => (
         <div
@@ -37,6 +46,18 @@ const ChatMessageList: React.FC<ChatMessageListProps> = ({ messages }) => {
             boxShadow: "0 1px 2px rgba(0,0,0,0.1)",
             position: "relative"
           }}>
+            {/* 발신자 이름 표시 */}
+            {message.senderName && (
+              <div style={{
+                fontSize: 12,
+                fontWeight: 600,
+                marginBottom: 4,
+                opacity: 0.8,
+                color: message.sender === "user" ? "#fff" : "#1976d2"
+              }}>
+                {message.senderName}
+              </div>
+            )}
             <div style={{ fontSize: 14, lineHeight: 1.4 }}>
               {message.text}
             </div>
@@ -46,7 +67,7 @@ const ChatMessageList: React.FC<ChatMessageListProps> = ({ messages }) => {
               marginTop: 4,
               textAlign: message.sender === "user" ? "right" : "left"
             }}>
-              {message.timestamp}
+              {formatTime(message.timestamp)}
             </div>
           </div>
         </div>

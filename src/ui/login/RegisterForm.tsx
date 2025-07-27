@@ -27,6 +27,27 @@ const RegisterForm: React.FC = () => {
     setIsLoading(true);
 
     try {
+      // 백엔드 서버가 없을 때를 위한 임시 회원가입 처리
+      if (!email || !password) {
+        setError("이메일과 비밀번호를 입력해주세요.");
+        setIsLoading(false);
+        return;
+      }
+
+      // 임시 회원가입 성공 처리 (백엔드 없이)
+      const tempUser = {
+        id: "1",
+        email: email,
+        name: email.split('@')[0] // 이메일에서 이름 추출
+      };
+      const tempToken = "temp_token_" + Date.now();
+      
+      login(tempUser, tempToken);
+      localStorage.setItem('token', tempToken);
+      navigate("/chat");
+      
+      // 실제 API 호출은 주석 처리
+      /*
       const response = await api.register({
         email: email,
         password: password
@@ -41,6 +62,7 @@ const RegisterForm: React.FC = () => {
         // 회원가입 실패
         setError(response.error || "회원가입에 실패했습니다.");
       }
+      */
     } catch (err) {
       setError("회원가입 중 오류가 발생했습니다.");
     } finally {
