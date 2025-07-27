@@ -1,4 +1,5 @@
 import React from 'react';
+import wonImage from '../../assets/won.png';
 import '../../styles/Logo.css';
 
 interface LogoProps {
@@ -9,8 +10,10 @@ interface LogoProps {
 const Logo: React.FC<LogoProps> = ({ size = 'medium', className = '' }) => {
   return (
     <div className={`logo ${size} ${className}`}>
-      <div className="logo-line"></div>
-      <span className="logo-text">payments</span>
+      <div className="logo-content">
+        <img src={wonImage} alt="won" className="won-icon" />
+        <span className="logo-text">payments</span>
+      </div>
     </div>
   );
 };

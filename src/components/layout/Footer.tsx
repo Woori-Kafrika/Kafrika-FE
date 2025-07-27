@@ -26,7 +26,7 @@ const Footer: React.FC = () => {
         <div className="footer-section">
           <h3>고객센터</h3>
           <div className="contact-info">
-            <p>운영시간: 평일 08:00-19:00 (점심시간 12:00~13:00 미운영 / 주말 및 공휴일 휴무)</p>
+            <p>운영시간: 평일 09:00-21:00 (점심시간 13:00~14:00 미운영 / 주말 및 공휴일 휴무)</p>
             <p>전화: 1544-7772</p>
             <p>이메일: support@kafrika.com</p>
             <p><a href="/payment-error">결제오류 지원 바로가기</a></p>
@@ -36,9 +36,9 @@ const Footer: React.FC = () => {
       </div>
       
       <div className="footer-bottom">
-        <p>Copyright © Kafrika Payments. All Rights Reserved</p>
-        <p>사업자등록번호: 123-45-67890 | 대표: 홍길동 | 호스팅서비스: AWS</p>
-        <p>통신판매업신고: 2024-서울강남-1234 | 주소: 서울특별시 강남구 테헤란로 123</p>
+        <p>Copyright © Won Payments. All Rights Reserved</p>
+        <p>사업자등록번호: 123-45-67890 | 대표: 정서현,신기범,최홍석,최소영 | 호스팅서비스: AWS</p>
+        <p>통신판매업신고: 2025-서울상암-1234 | 주소: 서울특별시 월드컵북로 434 상암 IT Tower</p>
       </div>
     </footer>
   );

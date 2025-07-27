@@ -2,38 +2,49 @@
 .logo {
   display: flex;
   align-items: center;
-  justify-content: center;
+  justify-content: flex-start;
+  width: 100%;
+  max-width: 450px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.logo-content {
+  display: flex;
+  align-items: center;
   gap: 12px;
 }
 
-.logo-line {
-  width: 24px;
-  height: 2px;
-  background-color: #000000;
-}
-
 .logo-text {
-  font-size: 20px;
+  font-size: 28px;
   font-weight: 500;
   color: #000000;
   letter-spacing: 0.5px;
 }
 
+.won-icon {
+  margin-top: 15px;
+  width: 50px;
+  height: 50px;
+  object-fit: contain;
+  margin-bottom: 15px;
+}
+
 /* 로고 크기 변형 */
-.logo.small .logo-line {
-  width: 16px;
-  height: 1px;
-}
-
 .logo.small .logo-text {
-  font-size: 14px;
+  font-size: 20px;
 }
 
-.logo.large .logo-line {
-  width: 32px;
-  height: 3px;
+.logo.small .won-icon {
+  width: 20px;
+  height: 20px;
 }
 
 .logo.large .logo-text {
-  font-size: 28px;
+  font-size: 36px;
+}
+
+.logo.large .won-icon {
+  width: 40px;
+  height: 40px;
 }

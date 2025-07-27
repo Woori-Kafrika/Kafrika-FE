@@ -13,17 +13,22 @@
   justify-content: center;
   align-items: center;
   padding: 60px 20px;
-  max-width: 400px;
+  max-width: 700px;
   margin: 0 auto;
+  width: 100%;
 }
 
 /* 제목 스타일 */
 .login-title {
-  font-size: 28px;
-  font-weight: 700;
-  color: #000000;
-  margin-bottom: 40px;
-  text-align: center;
+  font-size: 24px;
+  font-weight: 600;
+  color: #1f2937;
+  margin-bottom: 32px;
+  text-align: left;
+  width: 100%;
+  max-width: 450px;
+  margin-left: auto;
+  margin-right: auto;
 }
 
 /* 반응형 디자인 */
@@ -33,13 +38,13 @@
   }
 
   .login-title {
-    font-size: 24px;
-    margin-bottom: 30px;
+    font-size: 22px;
+    margin-bottom: 28px;
   }
 }
 
 @media (max-width: 480px) {
   .login-content {
-    padding: 30px 16px;
+    padding: 32px 16px;
   }
 }
