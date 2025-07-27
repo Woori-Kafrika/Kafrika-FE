@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import '../../styles/Footer.css';
 
 const Footer: React.FC = () => {
@@ -8,18 +9,18 @@ const Footer: React.FC = () => {
         <div className="footer-section">
           <h3>안내</h3>
           <ul>
-            <li><a href="/notices">공지사항</a></li>
-            <li><a href="/faq">자주 묻는 질문</a></li>
-            <li><a href="/safety">구매안전서비스 이용 조회</a></li>
+            <li><Link to="/renewal">공지사항</Link></li>
+            <li><Link to="/renewal">자주 묻는 질문</Link></li>
+            <li><Link to="/renewal">구매안전서비스 이용 조회</Link></li>
           </ul>
         </div>
         
         <div className="footer-section">
           <h3>팀</h3>
           <ul>
-            <li><a href="/about">회사소개</a></li>
-            <li><a href="/blog">블로그</a></li>
-            <li><a href="/careers">채용</a></li>
+            <li><Link to="/renewal">회사소개</Link></li>
+            <li><Link to="/renewal">블로그</Link></li>
+            <li><Link to="/renewal">채용</Link></li>
           </ul>
         </div>
         
@@ -29,8 +30,8 @@ const Footer: React.FC = () => {
             <p>운영시간: 평일 09:00-21:00 (점심시간 13:00~14:00 미운영 / 주말 및 공휴일 휴무)</p>
             <p>전화: 1544-7772</p>
             <p>이메일: support@kafrika.com</p>
-            <p><a href="/payment-error">결제오류 지원 바로가기</a></p>
-            <p><a href="/chat">1:1 채팅상담</a></p>
+            <p><Link to="/renewal">결제오류 지원 바로가기</Link></p>
+            <p><Link to="/renewal">1:1 채팅상담</Link></p>
           </div>
         </div>
       </div>
