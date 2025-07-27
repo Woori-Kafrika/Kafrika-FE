@@ -1,6 +1,7 @@
 # Kafrika Frontend
 
-카프리카(Kafrika) 프론트엔드 프로젝트입니다.
+<img width="500" height="500" alt="won-removebg-preview" src="https://github.com/user-attachments/assets/8291be1b-264b-43bb-a03b-7fffad266033" />
+
 
 ## 🚀 프로젝트 소개
 
@@ -25,20 +26,17 @@ KAFRIKA 팀은 우리페이먼츠와 협업하여 대용량 트래픽을 처리�
 ## 📱 페이지 화면
 
 ### 로그인 페이지
-
-![로그인 페이지](screenshots/login-page.png)
+![로그인 페이지](https://github.com/user-attachments/assets/f6525622-4e17-4056-ab18-9fd48b524c69)
 
 ### 회원가입 페이지
-
-![회원가입 페이지](screenshots/signup-page.png)
+![회원가입 페이지](https://github.com/user-attachments/assets/2df567f7-1ccf-4afc-b6b4-e7a2b1bf6c57)
 
 ### 비밀번호 재설정 페이지
-
-![비밀번호 재설정 페이지](screenshots/password-reset-page.png)
+![비밀번호 재설정 페이지](https://github.com/user-attachments/assets/dd9f26f9-9f3f-4d83-a429-66f155a79919)
 
 ### 리뉴얼 페이지
+![리뉴얼 페이지](https://github.com/user-attachments/assets/188f5444-e731-43a0-8eb8-0f303247f7b9)
 
-![리뉴얼 페이지](screenshots/renewal-page.png)
 
 ## 📁 프로젝트 구조
 
