@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import Logo from '../components/common/Logo';
 import LoginForm from '../components/auth/LoginForm';
 import Footer from '../components/layout/Footer';
@@ -7,6 +8,7 @@ import { authService } from '../services/authService';
 import '../styles/LoginPage.css';
 
 const LoginPage: React.FC = () => {
+  const navigate = useNavigate();
   const [isLoading, setIsLoading] = useState(false);
   const [errorMessage, setErrorMessage] = useState('');
 
@@ -19,9 +21,8 @@ const LoginPage: React.FC = () => {
       
       if (response.success) {
         console.log('로그인 성공!');
-        // 로그인 성공 후 처리 (예: 홈페이지로 리다이렉트)
-        // window.location.href = '/';
-        alert('로그인에 성공했습니다!');
+        // 로그인 성공 후 대시보드로 리다이렉트
+        navigate('/dashboard');
       } else {
         setErrorMessage(response.message || '로그인에 실패했습니다.');
       }
