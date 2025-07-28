@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import Footer from '../components/layout/Footer';
 import FloatingChat from '../components/common/FloatingChat';
 import ServiceDelayModal from '../components/common/ServiceDelayModal';
@@ -6,6 +7,7 @@ import '../styles/DashboardPage.css';
 import wonImage from '../assets/won.png';
 
 const DashboardPage = () => {
+  const navigate = useNavigate();
   const [selectedCategory, setSelectedCategory] = useState('전체');
   const [showServiceDelayModal, setShowServiceDelayModal] = useState(false);
 
@@ -42,15 +44,15 @@ const DashboardPage = () => {
   ];
 
   const handleChatClick = () => {
-    console.log('채팅 버튼 클릭');
+    navigate('/traffic-exceeded');
   };
 
   const handlePaymentHistory = () => {
-    console.log('결제내역 확인');
+    navigate('/traffic-exceeded');
   };
 
   const handleChatConsultation = () => {
-    console.log('1:1 채팅상담');
+    navigate('/traffic-exceeded');
   };
 
   const filteredFaqItems = selectedCategory === '전체' 
@@ -70,21 +72,23 @@ const DashboardPage = () => {
     <div className="dashboard-container">
       {/* 상단 네비게이션 */}
       <nav className="top-navigation">
-                  <div className="nav-left">
-            <div className="logo">🔷 payments</div>
-            <div className="nav-links">
-              <a href="#business">사업 시작</a>
-              <a href="#payment">결제 서비스</a>
-              <a href="#fees">이용요금</a>
-              <a href="#support" className="active">고객센터</a>
-              <a href="#guide">개발가이드</a>
+        <div className="nav-left">
+          <div className="logo">
+            <img src={wonImage} alt="WON" className="nav-logo" />
+            <span>payments</span>
+          </div>
+          <div className="nav-links">
+              <a href="#" onClick={(e) => { e.preventDefault(); navigate('/traffic-exceeded'); }}>사업 시작</a>
+              <a href="#" onClick={(e) => { e.preventDefault(); navigate('/traffic-exceeded'); }}>결제 서비스</a>
+              <a href="#" onClick={(e) => { e.preventDefault(); navigate('/traffic-exceeded'); }}>이용요금</a>
+              <a href="#" onClick={(e) => { e.preventDefault(); navigate('/traffic-exceeded'); }} className="active">고객센터</a>
+              <a href="#" onClick={(e) => { e.preventDefault(); navigate('/traffic-exceeded'); }}>개발가이드</a>
             </div>
           </div>
           <div className="nav-right">
-            <a href="#history">결제내역 조회</a>
-            <a href="#login">로그인</a>
-            <button className="apply-button">이용 신청하기</button>
-            <span className="update-status">업데이트 완료 ⋯</span>
+            <a href="#" onClick={(e) => { e.preventDefault(); navigate('/traffic-exceeded'); }}>결제내역 조회</a>
+            <a href="#" onClick={(e) => { e.preventDefault(); navigate('/traffic-exceeded'); }}>로그인</a>
+            <button className="apply-button" onClick={() => navigate('/traffic-exceeded')}>이용 신청하기</button>
           </div>
       </nav>
 
@@ -153,8 +157,8 @@ const DashboardPage = () => {
               더 자세한 도움이 필요하시면 언제든 연락해주세요.
             </p>
             <div className="help-buttons">
-              <button className="help-button-primary">1:1 문의하기</button>
-              <button className="help-button-secondary">전화상담</button>
+              <button className="help-button-primary" onClick={() => navigate('/traffic-exceeded')}>1:1 문의하기</button>
+              <button className="help-button-secondary" onClick={() => navigate('/traffic-exceeded')}>전화상담</button>
             </div>
           </div>
         </div>

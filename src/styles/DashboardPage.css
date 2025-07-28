@@ -27,9 +27,18 @@
 }
 
 .logo {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
   font-size: 1.5rem;
   font-weight: 700;
   color: #4285f4;
+}
+
+.nav-logo {
+  width: 40px;
+  height: 40px;
+  border-radius: 6px;
 }
 
 .nav-links {
@@ -387,7 +396,7 @@
   max-width: 400px;
   gap: 0;
   justify-content: flex-start;
-  padding-top: 4rem;
+  padding-top: 4 rem;
 }
 
 .won-logo {
