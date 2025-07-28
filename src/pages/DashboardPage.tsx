@@ -28,7 +28,7 @@ const DashboardPage = () => {
     { category: '카드사 심사', question: 'Q. 카드사 심사 기간은 얼마나 걸리나요?' },
     { category: '서류안내', question: 'Q. 필요한 서류는 어떤 것들이 있나요?' },
     { category: '기술지원', question: 'Q. 기술지원은 언제 이용할 수 있나요?' },
-    { category: '통신판매업 바로신청', question: 'Q. 통신판매업 신고는 어떻게 하나요?' },
+    { category: '통신판매업', question: 'Q. 통신판매업 신고는 어떻게 하나요?' },
     { category: '결제', question: 'Q. 결제 오류가 발생했을 때는 어떻게 하나요?' },
     { category: '정산', question: 'Q. 정산일은 언제인가요?' },
     { category: '계약', question: 'Q. 계약 해지 시 환불은 어떻게 되나요?' },
@@ -40,7 +40,7 @@ const DashboardPage = () => {
     { category: '카드사 심사', question: 'Q. 카드사 심사 기준은 무엇인가요?' },
     { category: '서류안내', question: 'Q. 서류 제출 방법은 어떻게 되나요?' },
     { category: '기술지원', question: 'Q. 기술지원 연락처는 어디인가요?' },
-    { category: '통신판매업 바로신청', question: 'Q. 통신판매업 신고 비용은 얼마인가요?' },
+    { category: '통신판매업', question: 'Q. 통신판매업 신고 비용은 얼마인가요?' },
   ];
 
   const handleChatClick = () => {
