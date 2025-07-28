@@ -1,4 +1,4 @@
-import { API_BASE_URL, API_ENDPOINTS, HTTP_STATUS } from '../constants/api';
+import { API_BASE_URL, API_ENDPOINTS } from '../constants/api';
 
 export interface LoginRequest {
   id: string;
@@ -7,7 +7,8 @@ export interface LoginRequest {
 
 export interface LoginResponse {
   success: boolean;
-  message?: string;
+  message: string;
+  token?: string;
 }
 
 export interface ApiResponse<T> {
@@ -17,15 +18,13 @@ export interface ApiResponse<T> {
 }
 
 class AuthService {
-  private async makeRequest<T>(
-    endpoint: string,
-    options: RequestInit = {}
-  ): Promise<T> {
+  private async makeRequest<T>(endpoint: string, options: RequestInit = {}): Promise<T> {
     const url = `${API_BASE_URL}${endpoint}`;
     
     const defaultOptions: RequestInit = {
       headers: {
         'Content-Type': 'application/json',
+        ...options.headers,
       },
       ...options,
     };
@@ -34,34 +33,40 @@ class AuthService {
       const response = await fetch(url, defaultOptions);
       
       if (!response.ok) {
-        const errorData = await response.json().catch(() => ({}));
-        throw new Error(errorData.message || `HTTP error! status: ${response.status}`);
+        throw new Error(`HTTP error! status: ${response.status}`);
       }
-
+      
       return await response.json();
     } catch (error) {
-      console.error('API 요청 실패:', error);
+      console.error('API request failed:', error);
       throw error;
     }
   }
 
   async login(credentials: LoginRequest): Promise<LoginResponse> {
     try {
-      const response = await this.makeRequest<ApiResponse<LoginResponse>>(
-        API_ENDPOINTS.LOGIN,
-        {
-          method: 'POST',
-          body: JSON.stringify(credentials),
-        }
-      );
+      const response = await this.makeRequest<ApiResponse<LoginResponse>>(API_ENDPOINTS.LOGIN, {
+        method: 'POST',
+        body: JSON.stringify(credentials),
+      });
 
-      return {
-        success: response.success,
-        message: response.message,
-      };
+      if (response.success) {
+        return {
+          success: true,
+          message: '로그인 성공',
+          token: response.data?.token,
+        };
+      } else {
+        return {
+          success: false,
+          message: response.message || '로그인 실패',
+        };
+      }
     } catch (error) {
-      console.error('로그인 실패:', error);
-      throw error;
+      return {
+        success: false,
+        message: '로그인 중 오류가 발생했습니다.',
+      };
     }
   }
 }

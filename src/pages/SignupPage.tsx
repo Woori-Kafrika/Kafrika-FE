@@ -3,30 +3,22 @@ import Logo from '../components/common/Logo';
 import SignupForm from '../components/auth/SignupForm';
 import Footer from '../components/layout/Footer';
 import FloatingChat from '../components/common/FloatingChat';
-import { authService } from '../services/authService';
 import '../styles/SignupPage.css';
 
 const SignupPage: React.FC = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [errorMessage, setErrorMessage] = useState('');
 
-  const handleSignup = async (
-    email: string, 
-    password: string, 
-    passwordConfirm: string, 
-    name: string, 
-    phone: string, 
-    referralCode?: string
-  ) => {
+  const handleSignup = async (email: string, password: string, passwordConfirm: string, name: string, phone: string, referralCode?: string) => {
     setIsLoading(true);
     setErrorMessage('');
     
     try {
       // 회원가입 API 호출 (백엔드에 맞게 수정 필요)
-      console.log('회원가입 시도:', { email, password, name, phone, referralCode });
+      console.log('회원가입 시도:', { email, password, passwordConfirm, name, phone, referralCode });
       
       // 임시로 성공 처리
-      alert('회원가입에 성공했습니다!');
+      alert('회원가입이 완료되었습니다.');
       
     } catch (error) {
       console.error('회원가입 실패:', error);
