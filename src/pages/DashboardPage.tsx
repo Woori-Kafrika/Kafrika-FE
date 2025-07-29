@@ -193,7 +193,8 @@ const DashboardPage = () => {
   };
 
   const handleChatConsultation = () => {
-    navigate('/traffic-exceeded');
+    // navigate('/traffic-exceeded');
+    userId ? navigate('/chat') : navigate('/login');
   };
 
   const handleCategoryClick = (category: string) => {
