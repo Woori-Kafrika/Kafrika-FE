@@ -3,21 +3,21 @@ import { Link } from 'react-router-dom';
 import '../../styles/PasswordResetForm.css';
 
 interface PasswordResetFormProps {
-  onSubmit: (email: string) => void;
+  onSubmit: (id: string) => void;
   isLoading?: boolean;
 }
 
 const PasswordResetForm: React.FC<PasswordResetFormProps> = ({ onSubmit, isLoading = false }) => {
-  const [email, setEmail] = useState('');
-  const [emailError, setEmailError] = useState('');
+  const [id, setId] = useState('');
+  const [idError, setIdError] = useState('');
 
-  const handleEmailChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleIdChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value;
-    setEmail(value);
+    setId(value);
     if (value === '') {
-      setEmailError('이메일을 입력해주세요.');
+      setIdError('아이디를 입력해주세요.');
     } else {
-      setEmailError('');
+      setIdError('');
     }
   };
 
@@ -25,13 +25,13 @@ const PasswordResetForm: React.FC<PasswordResetFormProps> = ({ onSubmit, isLoadi
     e.preventDefault();
     let hasError = false;
 
-    if (!email) {
-      setEmailError('이메일을 입력해주세요.');
+    if (!id) {
+      setIdError('아이디를 입력해주세요.');
       hasError = true;
     }
 
     if (!hasError) {
-      onSubmit(email);
+      onSubmit(id);
     }
   };
 
@@ -40,25 +40,23 @@ const PasswordResetForm: React.FC<PasswordResetFormProps> = ({ onSubmit, isLoadi
       <div className="input-group">
         <p className="input-description">임시 비밀번호를 받을 이메일 계정을 입력해주세요.</p>
         <input
-          type="email"
-          value={email}
-          onChange={handleEmailChange}
-          className={`input-field ${emailError ? 'error' : ''}`}
+          type="text"
+          value={id}
+          onChange={handleIdChange}
+          className={`input-field ${idError ? 'error' : ''}`}
           placeholder="이메일을 입력해주세요"
           disabled={isLoading}
         />
-        {emailError && <div className="error-message">{emailError}</div>}
+        {idError && <div className="error-message">{idError}</div>}
       </div>
 
       <div className="form-actions">
         <div className="links">
-          <Link to="/login" className="link">로그인으로 돌아가기</Link>
+          <Link to="/login" className="link">
+            로그인으로 돌아가기
+          </Link>
         </div>
-        <button 
-          type="submit" 
-          className="reset-button"
-          disabled={isLoading || !email}
-        >
+        <button type="submit" className="reset-button" disabled={isLoading || !id}>
           {isLoading ? '처리 중...' : '다음'}
         </button>
       </div>
@@ -66,4 +64,4 @@ const PasswordResetForm: React.FC<PasswordResetFormProps> = ({ onSubmit, isLoadi
   );
 };
 
-export default PasswordResetForm; 
+export default PasswordResetForm;
