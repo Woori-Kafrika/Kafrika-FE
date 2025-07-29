@@ -4,6 +4,7 @@ import SockJS from 'sockjs-client';
 import '../styles/ChatPage.css';
 import ChatMessage from '../components/chat/ChatMessage';
 import { API_BASE_URL } from '../constants/api';
+import { chatService } from '../services/chatService';
 
 interface Message {
   senderId: number;
@@ -49,10 +50,8 @@ const ChatPage: React.FC = () => {
   };
 
   useEffect(() => {
-    // 1. 초기 채팅 로그 GET 요청
-    fetch(`${API_BASE_URL}/chat/log`)
-      .then((res) => res.json())
-      .then((data: Message[]) => setMessages(data));
+    // 1. 초기 채팅 로그 요청
+    chatService.getChatLog().then((data) => setMessages(data));
 
     // 2. WebSocket 연결
     connect();
