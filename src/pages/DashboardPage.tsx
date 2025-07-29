@@ -8,7 +8,7 @@ import wonImage from '../assets/won.png';
 
 const DashboardPage = () => {
   const navigate = useNavigate();
-  const userId = localStorage.getItem('userId');
+  const [userId, setUserId] = useState<string | null>(localStorage.getItem('userId'));
 
   const [selectedCategory, setSelectedCategory] = useState('전체');
   const [showServiceDelayModal, setShowServiceDelayModal] = useState(false);
@@ -184,6 +184,18 @@ const DashboardPage = () => {
     },
   ];
 
+  const handleLogoutOrLogin = (e: React.MouseEvent) => {
+    e.preventDefault();
+
+    if (!userId) {
+      navigate('/login');
+    } else {
+      localStorage.removeItem('userId');
+      setUserId(null); // ✅ 상태 업데이트로 재렌더링 유도
+      alert('로그아웃되었습니다.');
+    }
+  };
+
   const handleChatClick = () => {
     navigate('/traffic-exceeded');
   };
@@ -294,19 +306,8 @@ const DashboardPage = () => {
           >
             결제내역 조회
           </a>
-          <a
-            href="#"
-            onClick={(e) => {
-              e.preventDefault();
-              if (userId != null) {
-                localStorage.removeItem('userId');
-                navigate('/login');
-              } else {
-                navigate('/login');
-              }
-            }}
-          >
-            {userId != null ? '로그아웃' : '로그인'}
+          <a href="#" onClick={handleLogoutOrLogin}>
+            {userId ? '로그아웃' : '로그인'}
           </a>
 
           <button className="apply-button" onClick={() => navigate('/traffic-exceeded')}>
