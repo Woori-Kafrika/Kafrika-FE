@@ -1,9 +1,10 @@
-export const API_BASE_URL = process.env.REACT_APP_API_BASE_URL || 'http://localhost:8081';
+export const API_BASE_URL = process.env.REACT_APP_API_BASE_URL || 'http://localhost:8080';
 
 export const API_ENDPOINTS = {
   LOGIN: '/user/login',
   SIGNUP: '/user/signup',
   USER_PROFILE: '/user/profile',
+  CHAT_LOG: '/chat/log',
 } as const;
 
 export const HTTP_STATUS = {
@@ -14,4 +15,18 @@ export const HTTP_STATUS = {
   FORBIDDEN: 403,
   NOT_FOUND: 404,
   INTERNAL_SERVER_ERROR: 500,
-} as const; 
+} as const;
+
+export interface BaseApiSuccess<T> {
+  code: number;
+  status: string;
+  message: string;
+  result: T;
+}
+
+export interface BaseApiError {
+  code: number;
+  status: string;
+  message: string;
+  timestamp: string;
+}
