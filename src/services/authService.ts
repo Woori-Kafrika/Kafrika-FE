@@ -5,10 +5,6 @@ export interface LoginRequest {
   id: string;
   pw: string;
 }
-export interface LoginResponse {
-  token?: string;
-}
-
 export interface SignupRequest {
   name: string;
   id: string;
@@ -16,19 +12,20 @@ export interface SignupRequest {
 }
 
 export class AuthService {
-  async login(
-    payload: LoginRequest
-  ): Promise<{ success: boolean; message: string; token?: string }> {
+  async login(payload: LoginRequest): Promise<{ success: boolean; message: string }> {
     try {
-      const result = await apiRequest<{ isSuccess: boolean; token?: string }>(API_ENDPOINTS.LOGIN, {
+      const result = await apiRequest<{ userId: string }>(API_ENDPOINTS.LOGIN, {
         method: 'POST',
         body: JSON.stringify(payload),
       });
 
+      if (result.userId !== undefined) {
+        localStorage.setItem('userId', result.userId);
+      }
+
       return {
-        success: result.isSuccess,
+        success: true,
         message: '로그인 성공',
-        token: result.token,
       };
     } catch (error: any) {
       return {
@@ -45,6 +42,7 @@ export class AuthService {
         body: JSON.stringify(payload),
       });
 
+      console.log(result.isSuccess);
       return {
         success: result.isSuccess,
         message: '회원가입 성공',

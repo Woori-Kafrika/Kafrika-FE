@@ -15,13 +15,12 @@ const LoginPage: React.FC = () => {
   const handleLogin = async (id: string, pw: string) => {
     setIsLoading(true);
     setErrorMessage('');
-    
+
     try {
       const response = await authService.login({ id, pw });
-      
+
       if (response.success) {
         console.log('로그인 성공!');
-        // 로그인 성공 후 대시보드로 리다이렉트
         navigate('/dashboard');
       } else {
         setErrorMessage(response.message || '로그인에 실패했습니다.');
@@ -50,14 +49,17 @@ const LoginPage: React.FC = () => {
 
         {/* 에러 메시지 */}
         {errorMessage && (
-          <div className="error-message" style={{ 
-            color: 'red', 
-            textAlign: 'center', 
-            marginBottom: '1rem',
-            padding: '0.5rem',
-            backgroundColor: '#ffebee',
-            borderRadius: '4px'
-          }}>
+          <div
+            className="error-message"
+            style={{
+              color: 'red',
+              textAlign: 'center',
+              marginBottom: '1rem',
+              padding: '0.5rem',
+              backgroundColor: '#ffebee',
+              borderRadius: '4px',
+            }}
+          >
             {errorMessage}
           </div>
         )}
@@ -75,4 +77,4 @@ const LoginPage: React.FC = () => {
   );
 };
 
-export default LoginPage; 
+export default LoginPage;
