@@ -167,7 +167,7 @@ const HomePage = () => {
                 navigate('/login');
               }
             }}>
-              서비스
+              회사 소개
             </a>
             <a href="#" onClick={(e) => { 
               e.preventDefault(); 
@@ -178,7 +178,7 @@ const HomePage = () => {
                 navigate('/login');
               }
             }}>
-              앱 기능
+              공지 사항
             </a>
             <a href="#" onClick={(e) => { 
               e.preventDefault(); 
@@ -189,7 +189,7 @@ const HomePage = () => {
                 navigate('/login');
               }
             }}>
-              보안
+              고객 센터
             </a>
             <a href="#" onClick={(e) => { 
               e.preventDefault(); 
@@ -200,7 +200,7 @@ const HomePage = () => {
                 navigate('/login');
               }
             }}>
-              시작하기
+              채용
             </a>
           </nav>
 
