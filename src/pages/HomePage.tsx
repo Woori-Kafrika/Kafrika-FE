@@ -158,16 +158,48 @@ const HomePage = () => {
             <a href="#" onClick={(e) => { e.preventDefault(); scrollToSection(0); }}>
               홈
             </a>
-            <a href="#" onClick={(e) => { e.preventDefault(); scrollToSection(1); }}>
+            <a href="#" onClick={(e) => { 
+              e.preventDefault(); 
+              if (isLoggedIn) {
+                scrollToSection(1);
+              } else {
+                alert('로그인이 필요한 서비스입니다.');
+                navigate('/login');
+              }
+            }}>
               서비스
             </a>
-            <a href="#" onClick={(e) => { e.preventDefault(); scrollToSection(2); }}>
+            <a href="#" onClick={(e) => { 
+              e.preventDefault(); 
+              if (isLoggedIn) {
+                scrollToSection(2);
+              } else {
+                alert('로그인이 필요한 서비스입니다.');
+                navigate('/login');
+              }
+            }}>
               앱 기능
             </a>
-            <a href="#" onClick={(e) => { e.preventDefault(); scrollToSection(3); }}>
+            <a href="#" onClick={(e) => { 
+              e.preventDefault(); 
+              if (isLoggedIn) {
+                scrollToSection(3);
+              } else {
+                alert('로그인이 필요한 서비스입니다.');
+                navigate('/login');
+              }
+            }}>
               보안
             </a>
-            <a href="#" onClick={(e) => { e.preventDefault(); scrollToSection(4); }}>
+            <a href="#" onClick={(e) => { 
+              e.preventDefault(); 
+              if (isLoggedIn) {
+                scrollToSection(4);
+              } else {
+                alert('로그인이 필요한 서비스입니다.');
+                navigate('/login');
+              }
+            }}>
               시작하기
             </a>
           </nav>
@@ -214,7 +246,14 @@ const HomePage = () => {
                 <button className="primary-btn" onClick={handleFeatureAccess}>
                   {isLoggedIn ? '대시보드 바로가기' : '사업 시작하기'}
                 </button>
-                <button className="secondary-btn" onClick={() => scrollToSection(1)}>
+                <button className="secondary-btn" onClick={() => {
+                  if (isLoggedIn) {
+                    scrollToSection(1);
+                  } else {
+                    alert('로그인이 필요한 서비스입니다.');
+                    navigate('/login');
+                  }
+                }}>
                   서비스 둘러보기
                 </button>
               </div>
@@ -347,7 +386,10 @@ const HomePage = () => {
                 <img src={iphoneFrame} alt="iPhone" className="iphone-frame" />
                 <div className="phone-screen">
                   <div className="app-header">
-                    <div className="app-title">payments</div>
+                    <div className="app-title">
+                      <img src={wonIcon} alt="payments" className="app-logo" />
+                      payments
+                    </div>
                     <div className="app-actions">
                       <div className="search-icon">🔍</div>
                       <div className="menu-icon">☰</div>

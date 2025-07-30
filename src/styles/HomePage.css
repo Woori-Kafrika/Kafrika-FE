@@ -843,7 +843,16 @@
 
 .app-title {
   font-size: 20px;
-  font-weight: 700;
+  font-weight: 500;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.app-logo {
+  width: 30px;
+  height: 30px;
+  object-fit: contain;
 }
 
 .app-actions {
