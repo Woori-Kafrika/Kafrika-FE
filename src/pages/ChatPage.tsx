@@ -28,13 +28,29 @@ const ChatPage: React.FC = () => {
       console.log('✅ STOMP connected');
       stompClient.current.subscribe('/sub/chat', (message: any) => {
         const msg: Message = JSON.parse(message.body);
-        setMessages((prev) => [...prev, msg]);
+
+        // 관리자면 다 받고, 아니면 자기 메시지나 admin 메시지만 보기
+        if (userId === 1 || msg.senderId === 1 || msg.senderId === userId) {
+          alert('asdf');
+          setMessages((prev) => [...prev, msg]);
+        }
       });
     });
   };
 
   const sendMessage = () => {
     if (inputValue.trim() === '' || !stompClient.current) return;
+
+    const now = new Date();
+    const newMessage: Message = {
+      senderId: userId,
+      userName: userId === 1 ? '관리자' : `User ${userId}`, // 필요시 수정
+      message: inputValue,
+      sentAt: now.toISOString(),
+    };
+
+    // 프론트에서 바로 추가 (UI에 즉시 반영)
+    setMessages((prev) => [...prev, newMessage]);
 
     const body = {
       userId,
@@ -50,10 +66,17 @@ const ChatPage: React.FC = () => {
   };
 
   useEffect(() => {
-    // 1. 초기 채팅 로그 요청
-    chatService.getChatLog().then((data) => setMessages(data));
+    chatService.getChatLog().then((data) => {
+      if (userId === 1) {
+        // 관리자면 전체 메시지 보기
+        setMessages(data);
+      } else {
+        // 일반 유저면 관리자/자신의 메시지만 보기
+        const filtered = data.filter((msg) => msg.senderId === 1 || msg.senderId === userId);
+        setMessages(filtered);
+      }
+    });
 
-    // 2. WebSocket 연결
     connect();
   }, []);
 
