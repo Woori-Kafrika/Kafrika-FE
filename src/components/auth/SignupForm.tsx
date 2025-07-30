@@ -3,18 +3,25 @@ import { Link } from 'react-router-dom';
 import '../../styles/SignupForm.css';
 
 interface SignupFormProps {
-  onSubmit: (email: string, password: string, passwordConfirm: string, name: string, phone: string, referralCode?: string) => void;
+  onSubmit: (
+    id: string,
+    password: string,
+    passwordConfirm: string,
+    name: string,
+    phone: string,
+    referralCode?: string
+  ) => void;
   isLoading?: boolean;
 }
 
 const SignupForm: React.FC<SignupFormProps> = ({ onSubmit, isLoading = false }) => {
-  const [email, setEmail] = useState('');
+  const [id, setId] = useState('');
   const [password, setPassword] = useState('');
   const [passwordConfirm, setPasswordConfirm] = useState('');
   const [name, setName] = useState('');
   const [phone, setPhone] = useState('');
   const [referralCode, setReferralCode] = useState('');
-  const [emailError, setEmailError] = useState('');
+  const [idError, setIdError] = useState('');
   const [passwordError, setPasswordError] = useState('');
   const [passwordConfirmError, setPasswordConfirmError] = useState('');
   const [nameError, setNameError] = useState('');
@@ -22,13 +29,13 @@ const SignupForm: React.FC<SignupFormProps> = ({ onSubmit, isLoading = false }) 
   const [agreement1, setAgreement1] = useState(false);
   const [agreement2, setAgreement2] = useState(false);
 
-  const handleEmailChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleIdChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value;
-    setEmail(value);
+    setId(value);
     if (value === '') {
-      setEmailError('이메일을 입력해주세요.');
+      setIdError('아이디를 입력해주세요.');
     } else {
-      setEmailError('');
+      setIdError('');
     }
   };
 
@@ -78,8 +85,8 @@ const SignupForm: React.FC<SignupFormProps> = ({ onSubmit, isLoading = false }) 
     e.preventDefault();
     let hasError = false;
 
-    if (!email) {
-      setEmailError('이메일을 입력해주세요.');
+    if (!id) {
+      setIdError('아이디를 입력해주세요.');
       hasError = true;
     }
     if (!password) {
@@ -99,23 +106,23 @@ const SignupForm: React.FC<SignupFormProps> = ({ onSubmit, isLoading = false }) 
     }
 
     if (!hasError) {
-      onSubmit(email, password, passwordConfirm, name, phone, referralCode);
+      onSubmit(id, password, passwordConfirm, name, phone, referralCode);
     }
   };
 
   return (
     <form onSubmit={handleSubmit} className="signup-form">
       <div className="input-group">
-        <label className="input-label">이메일 주소</label>
+        <label className="input-label">아이디</label>
         <input
-          type="email"
-          value={email}
-          onChange={handleEmailChange}
-          className={`input-field ${emailError ? 'error' : ''}`}
-          placeholder="이메일을 입력해주세요"
+          type="id"
+          value={id}
+          onChange={handleIdChange}
+          className={`input-field ${idError ? 'error' : ''}`}
+          placeholder="아이디를 입력해주세요"
           disabled={isLoading}
         />
-        {emailError && <div className="error-message">{emailError}</div>}
+        {idError && <div className="error-message">{idError}</div>}
       </div>
 
       <div className="input-group">
@@ -202,20 +209,21 @@ const SignupForm: React.FC<SignupFormProps> = ({ onSubmit, isLoading = false }) 
               onChange={(e) => setAgreement2(e.target.checked)}
               disabled={isLoading}
             />
-            <span className="checkbox-text">[선택] 새로운 기능 출시 안내를 받아보세요. 언제든 취소할 수 있어요. (광고·마케팅 수신 동의)</span>
+            <span className="checkbox-text">
+              [선택] 새로운 기능 출시 안내를 받아보세요. 언제든 취소할 수 있어요. (광고·마케팅 수신
+              동의)
+            </span>
           </label>
         </div>
       </div>
 
       <div className="form-actions">
         <div className="links">
-          <Link to="/login" className="link">이미 계정이 있으신가요? 로그인</Link>
+          <Link to="/login" className="link">
+            이미 계정이 있으신가요? 로그인
+          </Link>
         </div>
-        <button 
-          type="submit" 
-          className="signup-button"
-          disabled={isLoading || !agreement1}
-        >
+        <button type="submit" className="signup-button" disabled={isLoading || !agreement1}>
           {isLoading ? '계정 만들기 중...' : '계정 만들기'}
         </button>
       </div>
@@ -223,4 +231,4 @@ const SignupForm: React.FC<SignupFormProps> = ({ onSubmit, isLoading = false }) 
   );
 };
 
-export default SignupForm; 
+export default SignupForm;

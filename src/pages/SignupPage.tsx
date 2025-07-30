@@ -4,22 +4,39 @@ import SignupForm from '../components/auth/SignupForm';
 import Footer from '../components/layout/Footer';
 import FloatingChat from '../components/common/FloatingChat';
 import '../styles/SignupPage.css';
+import { authService } from '../services/authService';
+import { useNavigate } from 'react-router-dom';
 
 const SignupPage: React.FC = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [errorMessage, setErrorMessage] = useState('');
 
-  const handleSignup = async (email: string, password: string, passwordConfirm: string, name: string, phone: string, referralCode?: string) => {
+  const navigate = useNavigate();
+
+  const handleSignup = async (
+    id: string,
+    password: string,
+    passwordConfirm: string,
+    name: string
+  ) => {
     setIsLoading(true);
     setErrorMessage('');
-    
+
+    if (password !== passwordConfirm) {
+      setErrorMessage('비밀번호가 일치하지 않습니다.');
+      setIsLoading(false);
+      return;
+    }
+
     try {
-      // 회원가입 API 호출 (백엔드에 맞게 수정 필요)
-      console.log('회원가입 시도:', { email, password, passwordConfirm, name, phone, referralCode });
-      
-      // 임시로 성공 처리
-      alert('회원가입이 완료되었습니다.');
-      
+      const result = await authService.signup({ name: name, id: id, pw: password });
+
+      if (result.success) {
+        alert('회원가입이 완료되었습니다.');
+        navigate('/login');
+      } else {
+        setErrorMessage(result.message);
+      }
     } catch (error) {
       console.error('회원가입 실패:', error);
       setErrorMessage('회원가입 중 오류가 발생했습니다. 다시 시도해주세요.');
@@ -44,14 +61,17 @@ const SignupPage: React.FC = () => {
 
         {/* 에러 메시지 */}
         {errorMessage && (
-          <div className="error-message" style={{ 
-            color: 'red', 
-            textAlign: 'center', 
-            marginBottom: '1rem',
-            padding: '0.5rem',
-            backgroundColor: '#ffebee',
-            borderRadius: '4px'
-          }}>
+          <div
+            className="error-message"
+            style={{
+              color: 'red',
+              textAlign: 'center',
+              marginBottom: '1rem',
+              padding: '0.5rem',
+              backgroundColor: '#ffebee',
+              borderRadius: '4px',
+            }}
+          >
             {errorMessage}
           </div>
         )}
@@ -69,4 +89,4 @@ const SignupPage: React.FC = () => {
   );
 };
 
-export default SignupPage; 
+export default SignupPage;
