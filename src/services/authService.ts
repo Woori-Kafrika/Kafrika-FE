@@ -35,17 +35,23 @@ export class AuthService {
     }
   }
 
-  async signup(payload: SignupRequest): Promise<{ success: boolean; message: string }> {
+  async signup(payload: SignupRequest): Promise<{ success: boolean; message: string; userId?: string }> {
     try {
-      const result = await apiRequest<{ isSuccess: boolean }>(API_ENDPOINTS.SIGNUP, {
+      const result = await apiRequest<{ isSuccess: boolean; userId?: string }>(API_ENDPOINTS.SIGNUP, {
         method: 'POST',
         body: JSON.stringify(payload),
       });
 
       console.log(result.isSuccess);
+      
+      if (result.isSuccess && result.userId) {
+        localStorage.setItem('userId', result.userId);
+      }
+      
       return {
         success: result.isSuccess,
         message: '회원가입 성공',
+        userId: result.userId,
       };
     } catch (error: any) {
       return {

@@ -32,8 +32,8 @@ const SignupPage: React.FC = () => {
       const result = await authService.signup({ name: name, id: id, pw: password });
 
       if (result.success) {
-        alert('회원가입이 완료되었습니다.');
-        navigate('/login');
+        alert('회원가입이 완료되었습니다. 대시보드로 이동합니다.');
+        navigate('/dashboard');
       } else {
         setErrorMessage(result.message);
       }
