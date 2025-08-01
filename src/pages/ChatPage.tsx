@@ -13,8 +13,14 @@ interface Message {
   sentAt: string;
 }
 
+interface ChatStatus {
+  waitingCount: number;
+  estimatedDelaySec: number;
+}
+
 const ChatPage: React.FC = () => {
   const [messages, setMessages] = useState<Message[]>([]);
+  const [chatStatus, setChatStatus] = useState<ChatStatus | null>(null);
   const [inputValue, setInputValue] = useState('');
   const stompClient = useRef<any>(null);
   const chatEndRef = useRef<HTMLDivElement>(null);
@@ -26,14 +32,18 @@ const ChatPage: React.FC = () => {
 
     stompClient.current.connect({}, () => {
       console.log('✅ STOMP connected');
-      stompClient.current.subscribe('/sub/chat', (message: any) => {
+      stompClient.current.subscribe('/topic/chat', (message: any) => {
         const msg: Message = JSON.parse(message.body);
 
         // 관리자면 다 받고, 아니면 자기 메시지나 admin 메시지만 보기
         if (userId === 1 || msg.senderId === 1 || msg.senderId === userId) {
-          alert('asdf');
           setMessages((prev) => [...prev, msg]);
         }
+      });
+
+      stompClient.current.subscribe('/topic/chat/status', (message: any) => {
+        const status: ChatStatus = JSON.parse(message.body);
+        setChatStatus(status);
       });
     });
   };
@@ -57,7 +67,8 @@ const ChatPage: React.FC = () => {
       message: inputValue,
     };
 
-    stompClient.current.send('/pub/chat', {}, JSON.stringify(body));
+    // stompClient.current.send('/pub/chat', {}, JSON.stringify(body));
+    stompClient.current.send('/pub/kafka-chat', {}, JSON.stringify(body));
     setInputValue('');
   };
 
@@ -86,13 +97,17 @@ const ChatPage: React.FC = () => {
 
   return (
     <div className="chat-page-container">
-      <div className="chat-list-placeholder"></div>
+      <div className="chat-room-header">
+        <h2 className="chat-room-title">챗봇</h2>
+        {chatStatus && (
+          <div className="chat-status-bar">
+            ⏳ 현재 대기자 <strong>{chatStatus.waitingCount}</strong>명, 예상 지연{' '}
+            <strong>{chatStatus.estimatedDelaySec}</strong>초
+          </div>
+        )}
+      </div>
 
       <div className="chat-room">
-        <div className="chat-room-header">
-          <h2 className="chat-room-title">챗봇</h2>
-        </div>
-
         <div className="chat-messages">
           {messages.map((msg, idx) => (
             <ChatMessage
