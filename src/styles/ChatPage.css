@@ -1,81 +1,134 @@
 .chat-page-container {
   display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 50px;
   min-height: 100vh;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-  background-color: #ffffff;
+  padding: 2rem;
+  background-color: #f3f4f6;
+  box-sizing: border-box;
 }
 
-/* 왼쪽 채팅 목록 자리 */
-.chat-list-placeholder {
-  width: 300px;
-  background-color: #f9fafb;
-  border-right: 1px solid #e5e7eb;
-}
-
-/* 오른쪽 채팅방 영역 */
 .chat-room {
-  flex: 1;
   display: flex;
   flex-direction: column;
-  padding: 2rem;
+  width: 100%;
+  max-width: 720px;
+  height: 90vh;
+  background-color: #ffffff;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+  padding: 1.5rem;
+  box-sizing: border-box;
 }
 
-/* 헤더 */
 .chat-room-header {
   display: flex;
-  justify-content: space-between;
-  align-items: center;
+  flex-direction: column;
+  gap: 0.6rem;
   margin-bottom: 1.5rem;
+  padding-bottom: 0.5rem;
 }
 
 .chat-room-title {
-  font-size: 1.5rem;
+  font-size: 1.6rem;
   font-weight: 700;
-  color: #1f2937;
+  color: #1e293b;
+  margin: 0;
 }
 
-.chat-room-status {
-  font-size: 0.9rem;
-  color: #2563eb;
-  font-weight: 600;
+.chat-status-bar {
+  background-color: #f1f5f9;
+  border: 1px solid #dbeafe;
+  padding: 10px 14px;
+  font-size: 14px;
+  color: #334155;
+  border-radius: 8px;
+  line-height: 1.5;
+  width: 100%;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.04);
 }
 
-/* 메시지 목록 */
 .chat-messages {
   flex: 1;
   overflow-y: auto;
   display: flex;
   flex-direction: column;
-  gap: 1.2rem;
-  padding-right: 0.5rem;
+  gap: 1rem;
+  margin-top: 1rem;
+  padding-right: 0.25rem;
+  scroll-behavior: smooth;
 }
 
 .message {
   max-width: 60%;
   display: flex;
   flex-direction: column;
-  gap: 0.4rem;
+  gap: 0.2rem;
 }
 
 .sender {
   font-weight: 600;
-  font-size: 0.95rem;
-  color: #374151;
+  font-size: 0.9rem;
+  color: #6b7280;
+}
+
+.bubble-time-wrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  align-items: flex-end;
 }
 
 .bubble {
   background-color: #f3f4f6;
-  padding: 0.8rem 1rem;
-  border-radius: 1rem;
+  padding: 0.8rem 1.1rem;
+  border-radius: 1.1rem;
+  font-size: 0.95rem;
   line-height: 1.5;
 }
 
+.message {
+  max-width: 60%;
+  display: flex;
+  flex-direction: column;
+}
+
+.bubble-line {
+  display: flex;
+  align-items: flex-end;
+  gap: 6px;
+}
+
+/* 왼쪽 메시지 (상대방) */
 .message-left {
   align-self: flex-start;
 }
 
+.message-left .bubble-line {
+  flex-direction: row;
+  justify-content: flex-start;
+}
+
+/* 오른쪽 메시지 (내 메시지) */
 .message-right {
   align-self: flex-end;
+  padding-right: 4px;
+}
+
+.message-right .bubble-line {
+  flex-direction: row;
+  justify-content: flex-end;
+}
+
+/* 말풍선 */
+.bubble {
+  padding: 0.8rem 1.1rem;
+  border-radius: 1.1rem;
+  font-size: 0.95rem;
+  line-height: 1.5;
+  background-color: #f3f4f6;
+  color: #111827;
 }
 
 .message-right .bubble {
@@ -83,56 +136,42 @@
   color: white;
 }
 
-/* 타임스탬프 */
+/* 시간 */
 .timestamp {
   font-size: 0.75rem;
   color: #9ca3af;
+  white-space: nowrap;
 }
 
-/* 일정 카드 */
-.schedule-info {
-  background-color: #eef2ff;
-  border: 1px solid #c7d2fe;
-  border-radius: 1rem;
-}
-
-.calendar-button {
-  margin-top: 0.5rem;
-  background: none;
-  border: none;
-  color: #3b82f6;
-  font-weight: bold;
-  cursor: pointer;
-}
-
-/* 입력창 */
 .chat-input-wrapper {
   display: flex;
-  margin-top: 1.5rem;
+  gap: 0.75rem;
   border-top: 1px solid #e5e7eb;
   padding-top: 1rem;
+  margin-top: 1rem;
 }
 
 .chat-input {
   flex: 1;
-  padding: 0.8rem 1rem;
+  padding: 0.75rem 1rem;
   border: 1px solid #d1d5db;
   border-radius: 8px;
   font-size: 1rem;
-  margin-right: 1rem;
+  background-color: #f9fafb;
 }
 
 .send-button {
-  background-color: #2563eb;
+  background-color: #3b82f6;
   color: white;
   border: none;
-  padding: 0.8rem 1.5rem;
+  padding: 0.75rem 1.25rem;
   font-size: 1rem;
   border-radius: 8px;
   cursor: pointer;
-  font-weight: bold;
+  font-weight: 600;
+  transition: background-color 0.2s ease;
 }
 
 .send-button:hover {
-  background-color: #1d4ed8;
+  background-color: #2563eb;
 }

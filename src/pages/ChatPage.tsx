@@ -10,7 +10,7 @@ interface Message {
   senderId: number;
   userName: string;
   message: string;
-  sentAt: string;
+  sendAt: string;
 }
 
 interface ChatStatus {
@@ -56,7 +56,7 @@ const ChatPage: React.FC = () => {
       senderId: userId,
       userName: userId === 1 ? '관리자' : `User ${userId}`, // 필요시 수정
       message: inputValue,
-      sentAt: now.toISOString(),
+      sendAt: now.toISOString(),
     };
 
     // 프론트에서 바로 추가 (UI에 즉시 반영)
@@ -99,7 +99,7 @@ const ChatPage: React.FC = () => {
     <div className="chat-page-container">
       <div className="chat-room-header">
         <h2 className="chat-room-title">챗봇</h2>
-        {chatStatus && (
+        {chatStatus !== null && (
           <div className="chat-status-bar">
             ⏳ 현재 대기자 <strong>{chatStatus.waitingCount}</strong>명, 예상 지연{' '}
             <strong>{chatStatus.estimatedDelaySec}</strong>초
@@ -114,7 +114,7 @@ const ChatPage: React.FC = () => {
               key={idx}
               userName={msg.userName}
               message={msg.message}
-              sentAt={msg.sentAt}
+              sendAt={msg.sendAt}
               isMine={msg.senderId === userId}
             />
           ))}

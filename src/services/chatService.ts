@@ -6,7 +6,7 @@ export interface ChatMessage {
   senderId: number;
   userName: string;
   message: string;
-  sentAt: string;
+  sendAt: string;
 }
 
 class ChatService {

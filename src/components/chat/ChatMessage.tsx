@@ -1,19 +1,27 @@
 import React from 'react';
 import '../../styles/ChatPage.css';
 
-interface ChatMessageProps {
+interface Props {
   userName: string;
   message: string;
-  sentAt: string;
+  sendAt: string;
   isMine: boolean;
 }
 
-const ChatMessage: React.FC<ChatMessageProps> = ({ userName, message, sentAt, isMine }) => {
+const ChatMessage: React.FC<Props> = ({ userName, message, sendAt, isMine }) => {
+  const time = new Date(sendAt.slice(0, 23)).toLocaleTimeString('ko-KR', {
+    hour: '2-digit',
+    minute: '2-digit',
+    hour12: false,
+  });
+
   return (
     <div className={`message ${isMine ? 'message-right' : 'message-left'}`}>
-      {!isMine && <div className="sender">{userName}</div>}
-      <div className="bubble">{message}</div>
-      <div className="timestamp">{sentAt}</div>
+      <div className="bubble-line">
+        {isMine && <span className="timestamp">{time}</span>}
+        <div className="bubble">{message}</div>
+        {!isMine && <span className="timestamp">{time}</span>}
+      </div>
     </div>
   );
 };
