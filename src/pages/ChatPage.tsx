@@ -20,7 +20,7 @@ interface ChatStatus {
 
 const ChatPage: React.FC = () => {
   const [messages, setMessages] = useState<Message[]>([]);
-  // const [chatStatus, setChatStatus] = useState<ChatStatus | null>(null);
+  const [chatStatus, setChatStatus] = useState<ChatStatus | null>(null);
   const [inputValue, setInputValue] = useState('');
   const stompClient = useRef<any>(null);
   const chatEndRef = useRef<HTMLDivElement>(null);
@@ -54,10 +54,10 @@ const ChatPage: React.FC = () => {
         });
       });
 
-      // stompClient.current.subscribe('/topic/chat/status', (message: any) => {
-      //   const status: ChatStatus = JSON.parse(message.body);
-      //   setChatStatus(status);
-      // });
+      stompClient.current.subscribe('/topic/chat/status', (message: any) => {
+        const status: ChatStatus = JSON.parse(message.body);
+        setChatStatus(status);
+      });
     });
   };
 
@@ -65,14 +65,6 @@ const ChatPage: React.FC = () => {
     if (inputValue.trim() === '' || !stompClient.current) return;
 
     const now = new Date();
-    const newMessage: Message = {
-      senderId: userId,
-      message: inputValue,
-      sendAt: now.toISOString(),
-    };
-
-    // 프론트에서 바로 추가 (UI에 즉시 반영)
-    setMessages((prev) => [...prev, newMessage]);
 
     const body = {
       userId,
@@ -112,12 +104,12 @@ const ChatPage: React.FC = () => {
     <div className="chat-page-container">
       <div className="chat-room-header">
         <h2 className="chat-room-title">챗봇</h2>
-        {/* {chatStatus !== null && (
+        {chatStatus !== null && (
           <div className="chat-status-bar">
             ⏳ 현재 대기자 <strong>{chatStatus.waitingCount}</strong>명, 예상 지연{' '}
             <strong>{chatStatus.estimatedDelaySec}</strong>초
           </div>
-        )} */}
+        )}
       </div>
 
       <div className="chat-room">
