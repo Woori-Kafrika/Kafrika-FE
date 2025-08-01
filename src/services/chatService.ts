@@ -4,7 +4,7 @@ import { apiRequest } from './apiUtil';
 export interface ChatMessage {
   id: number;
   senderId: number;
-  userName: string;
+  senderName: string;
   message: string;
   sendAt: string;
 }

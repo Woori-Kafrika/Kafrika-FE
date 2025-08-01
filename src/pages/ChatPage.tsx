@@ -7,8 +7,8 @@ import { API_BASE_URL } from '../constants/api';
 import { chatService } from '../services/chatService';
 
 interface Message {
+  id?: number;
   senderId: number;
-  userName: string;
   message: string;
   sendAt: string;
 }
@@ -20,7 +20,7 @@ interface ChatStatus {
 
 const ChatPage: React.FC = () => {
   const [messages, setMessages] = useState<Message[]>([]);
-  const [chatStatus, setChatStatus] = useState<ChatStatus | null>(null);
+  // const [chatStatus, setChatStatus] = useState<ChatStatus | null>(null);
   const [inputValue, setInputValue] = useState('');
   const stompClient = useRef<any>(null);
   const chatEndRef = useRef<HTMLDivElement>(null);
@@ -32,19 +32,32 @@ const ChatPage: React.FC = () => {
 
     stompClient.current.connect({}, () => {
       console.log('✅ STOMP connected');
+
+      // 메시지 구독
       stompClient.current.subscribe('/topic/chat', (message: any) => {
         const msg: Message = JSON.parse(message.body);
+        console.log('구독중: ' + msg.message);
 
-        // 관리자면 다 받고, 아니면 자기 메시지나 admin 메시지만 보기
-        if (userId === 1 || msg.senderId === 1 || msg.senderId === userId) {
-          setMessages((prev) => [...prev, msg]);
-        }
+        setMessages((prev) => {
+          const alreadyExists = prev.some((m) => m.id === msg.id);
+          if (alreadyExists) return prev;
+
+          const isMine = msg.senderId === userId;
+          const isAdmin = userId === 1;
+
+          if (isAdmin || isMine || msg.senderId === 1) {
+            console.log('메시지 추가');
+            return [...prev, msg];
+          }
+
+          return prev;
+        });
       });
 
-      stompClient.current.subscribe('/topic/chat/status', (message: any) => {
-        const status: ChatStatus = JSON.parse(message.body);
-        setChatStatus(status);
-      });
+      // stompClient.current.subscribe('/topic/chat/status', (message: any) => {
+      //   const status: ChatStatus = JSON.parse(message.body);
+      //   setChatStatus(status);
+      // });
     });
   };
 
@@ -54,7 +67,6 @@ const ChatPage: React.FC = () => {
     const now = new Date();
     const newMessage: Message = {
       senderId: userId,
-      userName: userId === 1 ? '관리자' : `User ${userId}`, // 필요시 수정
       message: inputValue,
       sendAt: now.toISOString(),
     };
@@ -65,6 +77,7 @@ const ChatPage: React.FC = () => {
     const body = {
       userId,
       message: inputValue,
+      sendAt: now.toISOString(),
     };
 
     // stompClient.current.send('/pub/chat', {}, JSON.stringify(body));
@@ -99,12 +112,12 @@ const ChatPage: React.FC = () => {
     <div className="chat-page-container">
       <div className="chat-room-header">
         <h2 className="chat-room-title">챗봇</h2>
-        {chatStatus !== null && (
+        {/* {chatStatus !== null && (
           <div className="chat-status-bar">
             ⏳ 현재 대기자 <strong>{chatStatus.waitingCount}</strong>명, 예상 지연{' '}
             <strong>{chatStatus.estimatedDelaySec}</strong>초
           </div>
-        )}
+        )} */}
       </div>
 
       <div className="chat-room">
@@ -112,7 +125,6 @@ const ChatPage: React.FC = () => {
           {messages.map((msg, idx) => (
             <ChatMessage
               key={idx}
-              userName={msg.userName}
               message={msg.message}
               sendAt={msg.sendAt}
               isMine={msg.senderId === userId}
