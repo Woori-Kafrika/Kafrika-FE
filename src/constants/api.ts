@@ -1,10 +1,10 @@
-export const API_BASE_URL = process.env.REACT_APP_API_BASE_URL || 'http://113.198.66.77';
+export const API_BASE_URL = process.env.REACT_APP_API_BASE_URL || 'http://113.198.66.77:18113';
 
-export const WS_BASE_URL = process.env.REACT_APP_WS_BASE_URL || 'ws://113.198.66.77';
+export const WS_BASE_URL = process.env.REACT_APP_WS_BASE_URL || 'ws://113.198.66.77:18113';
 
 export const API_ENDPOINTS = {
-  LOGIN: '/user/login',
-  SIGNUP: '/user/signup',
+  LOGIN: '/auth/user/login',
+  SIGNUP: '/auth/user/signup',
   USER_PROFILE: '/user/profile',
   CHAT_LOG: '/chat/log',
 } as const;
