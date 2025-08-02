@@ -1,6 +1,6 @@
-export const API_BASE_URL = process.env.REACT_APP_API_BASE_URL || 'http://113.198.66.77:17113';
+export const API_BASE_URL = process.env.REACT_APP_API_BASE_URL || 'http://113.198.66.77:18113';
 
-export const WS_BASE_URL = process.env.REACT_APP_WS_BASE_URL || 'ws://113.198.66.77:17113';
+export const WS_BASE_URL = process.env.REACT_APP_WS_BASE_URL || 'ws://113.198.66.77:18113';
 
 export const API_ENDPOINTS = {
   LOGIN: '/auth/user/login',
